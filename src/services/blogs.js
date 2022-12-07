@@ -19,7 +19,7 @@ const getUsers = () => {
 
 const create = async (data) => {
   const config = {
-    headers: {Authorization: token}
+    headers: { Authorization: token }
   }
 
   const response = await axios.post(baseUrl, data, config)
@@ -28,18 +28,18 @@ const create = async (data) => {
 
 const update = async (data) => {
   const config = {
-    headers: {Authorization: token}
+    headers: { Authorization: token }
   }
   const response = await axios.put(`${baseUrl}/${data.id}`, data, config)
-  return response.data  
+  return response.data
 }
 
 const remove = async (data) => {
   const config = {
-    headers: {Authorization: token}
+    headers: { Authorization: token }
   }
   const response = await axios.delete(`${baseUrl}/${data.id}`, config)
-  return response.status  
+  return response.status
 }
 
 const exportedObject = {

@@ -1,7 +1,6 @@
-import { useState } from "react"
+import { useState } from 'react'
 
-const Blog = ({blog, addLike, removeBlog}) => {
-
+const Blog = ({ blog, addLike, removeBlog }) => {
   const [viewDetails, setViewDetails] = useState(false)
 
   const blogStyle = {
@@ -20,7 +19,7 @@ const Blog = ({blog, addLike, removeBlog}) => {
       backgroundColor: '#ff2c2c',
       color: 'white'
     }
-  }  
+  }
 
   const handleOnClick = () => {
     setViewDetails(!viewDetails)
@@ -28,25 +27,25 @@ const Blog = ({blog, addLike, removeBlog}) => {
 
   const handleAddLikes = () => {
     addLike({
-        id: blog.id,
-        user: blog.user.id,
-        likes: blog.likes + 1,
-        author: blog.author,
-        title: blog.title,
-        url: blog.url
-      })
+      id: blog.id,
+      user: blog.user.id,
+      likes: blog.likes + 1,
+      author: blog.author,
+      title: blog.title,
+      url: blog.url
+    })
   }
 
   const handleRemoveBlog = () => {
     removeBlog({
-        id: blog.id,
-        author: blog.author,
-        title: blog.title
-      })
+      id: blog.id,
+      author: blog.author,
+      title: blog.title
+    })
   }
 
   const showRemoveButton = () => {
-    const user = JSON.parse(localStorage.getItem('loginJSON'))
+    const user = JSON.parse(localStorage.getItem('loginJSON')) // eslint-disable-line
     if (user.username === blog.user.username) {
       return <button style={blogStyle.buttonRemove} onClick={handleRemoveBlog}>Remove</button>
     }
@@ -56,13 +55,13 @@ const Blog = ({blog, addLike, removeBlog}) => {
     if (viewDetails) {
       return (
         <>
-          {blog.url}<br/>
-          Likes: {blog.likes}<button style={blogStyle.generic} onClick={handleAddLikes}>like</button><br/>
-          {blog.author}<br/>
+          {blog.url}<br />
+          Likes: {blog.likes}<button style={blogStyle.generic} onClick={handleAddLikes}>like</button><br />
+          {blog.author}<br />
           {
             showRemoveButton()
           }
-          
+
         </>
       )
     }
@@ -70,9 +69,9 @@ const Blog = ({blog, addLike, removeBlog}) => {
 
   return (
     <div style={blogStyle.container}>
-      {blog.title}<button style={blogStyle.generic}onClick={handleOnClick}>{viewDetails ? 'hide' : 'view'}</button><br/>
+      {blog.title}<button style={blogStyle.generic} onClick={handleOnClick}>{viewDetails ? 'hide' : 'view'}</button><br />
       {showDetails()}
-    </div> 
+    </div>
   )
 }
 
