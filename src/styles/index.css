@@ -9,12 +9,12 @@
     margin-bottom: 10px;
   }
 
-  .error {
-    color: rgb(248, 7, 7);
-    background: lightgrey;
-    font-size: 20px;
-    border-style: solid;
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 10px;
-  }
+.error {
+  color: rgb(248, 7, 7);
+  background: lightgrey;
+  font-size: 20px;
+  border-style: solid;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
