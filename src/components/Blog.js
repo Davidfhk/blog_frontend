@@ -47,7 +47,7 @@ const Blog = ({ blog, addLike, removeBlog }) => {
   const showRemoveButton = () => {
     const user = JSON.parse(localStorage.getItem('loginJSON')) // eslint-disable-line
     if (user && user.username === blog.user.username) {
-      return <button style={blogStyle.buttonRemove} onClick={handleRemoveBlog}>Remove</button>
+      return <button id='remove-blog' style={blogStyle.buttonRemove} onClick={handleRemoveBlog}>Remove</button>
     }
   }
 
@@ -56,7 +56,7 @@ const Blog = ({ blog, addLike, removeBlog }) => {
       return (
         <>
           url: {blog.url}<br />
-          likes: {blog.likes}<button style={blogStyle.generic} onClick={handleAddLikes}>like</button><br />
+          likes: <span className='likes'>{blog.likes}</span><button id='like' style={blogStyle.generic} onClick={handleAddLikes}>like</button><br />
           {blog.author}<br />
           {
             showRemoveButton()
