@@ -1,5 +1,5 @@
-describe('Blog app', function() {
-  beforeEach(function() {
+describe('Blog app', function () {
+  beforeEach(function () {
     cy.request('POST', `${Cypress.env('EXTERNAL_API')}/testing/reset`)
     const user = {
       name: 'David Martos',
@@ -7,15 +7,15 @@ describe('Blog app', function() {
       password: 'password'
     }
     cy.request('POST', `${Cypress.env('EXTERNAL_API')}/users`, user)
-  })
-  it('Login form is shown', function() {
     cy.visit('')
+  })
+  it('Login form is shown', function () {
     cy.contains('blogs')
     cy.contains('Log in to application')
   })
 
-  describe('Login',function() {
-    it('succeeds with correct credentials', function() {
+  describe('Login', function () {
+    it('succeeds with correct credentials', function () {
       cy.get('#username').type('david')
       cy.get('#password').type('password')
       cy.get('#login-button').click()
@@ -23,24 +23,24 @@ describe('Blog app', function() {
       cy.contains('David Martos logged in')
     })
 
-    it('fails with wrong credentials', function() {
+    it('fails with wrong credentials', function () {
       cy.get('#username').type('invalidusername')
       cy.get('#password').type('invalidpassword')
       cy.get('#login-button').click()
 
       cy.get('.error')
-        .should('contain','invalid username or password')
+        .should('contain', 'invalid username or password')
         .and('have.css', 'border-style', 'solid')
         .and('have.css', 'color', 'rgb(248, 7, 7)')
     })
   })
 
-  describe.only('When logged in', function() {
-    beforeEach(function() {
+  describe('When logged in', function () {
+    beforeEach(function () {
       cy.login({ username: 'david', password: 'password' })
     })
 
-    it('A blog can be created', function() {
+    it('A blog can be created', function () {
       cy.contains('new blog').click()
       cy.get('#title').type('new post')
       cy.get('#author').type('David Martos')
@@ -48,34 +48,34 @@ describe('Blog app', function() {
 
       cy.get('form').submit()
 
-      cy.get('.blog').first().should('contain','new post')
+      cy.get('.blog').first().should('contain', 'new post')
     })
 
-    describe('and a blog exist', function() {
-      beforeEach(function() {
+    describe('and a blog exist', function () {
+      beforeEach(function () {
         cy.createBlog({
           title: 'new post',
           author: 'David Martos',
           url: 'www.davidmartos.com'
         })
       })
-      it('I can like a blog', function() {
-        cy.get('.blog button').should('contain','view').click()
+      it('I can like a blog', function () {
+        cy.get('.blog button').should('contain', 'view').click()
         cy.get('.blog button#like').click()
-  
-        cy.get('.blog').first().should('contain','likes: 1')
+
+        cy.get('.blog').first().should('contain', 'likes: 1')
       })
 
-      it('I can to remove a blog', function() {  
+      it('I can to remove a blog', function () {
         cy.get('form').submit()
-        cy.get('.blog button').should('contain','view').click()
+        cy.get('.blog button').should('contain', 'view').click()
         cy.get('.blog button#remove-blog').click()
-  
-        cy.get('html').should('not.contain','new post')
+
+        cy.get('html').should('not.contain', 'new post')
       })
 
-      describe('login a user different', function() {
-        beforeEach(function(){
+      describe('login a user different', function () {
+        beforeEach(function () {
           const user = {
             name: 'Herminia Sandoval',
             username: 'herminia',
@@ -86,15 +86,15 @@ describe('Blog app', function() {
           cy.login({ username: 'herminia', password: 'password' })
         })
 
-        it('I can not to remove a blog of other user', function() {
-          cy.get('.blog button').should('contain','view').click()
+        it('I can not to remove a blog of other user', function () {
+          cy.get('.blog button').should('contain', 'view').click()
           cy.get('.blog').should('contain', 'David Martos')
-          cy.get('.blog').should('not.contain','Remove')    
+          cy.get('.blog').should('not.contain', 'Remove')
         })
       })
 
-      describe('Creating more posts with likes', function() {
-        beforeEach(function() {
+      describe('Creating more posts with likes', function () {
+        beforeEach(function () {
           cy.createBlog({
             title: 'This post has 5 likes',
             author: 'David Martos',
@@ -108,12 +108,12 @@ describe('Blog app', function() {
             likes: 2
           })
         })
-        
-        it('Posts should be ordered by likes from lowest to highest', function() {
+
+        it('Posts should be ordered by likes from lowest to highest', function () {
           cy.get('.blog').each(($el, index, $list) => {
-              let likes = 0
-              cy.get('.blog').eq(index).find('button').should('contain','view').click()
-              cy.get('.blog')
+            let likes = 0
+            cy.get('.blog').eq(index).find('button').should('contain', 'view').click()
+            cy.get('.blog')
               .eq(index)
               .find('button#like')
               .prev()
@@ -126,7 +126,6 @@ describe('Blog app', function() {
                   likes = parseInt(text.trim())
                 }
               })
-              
           })
         })
       })
