@@ -110,8 +110,8 @@ describe('Blog app', function () {
         })
 
         it('Posts should be ordered by likes from lowest to highest', function () {
+          let likes = 0
           cy.get('.blog').each(($el, index, $list) => {
-            let likes = 0
             cy.get('.blog').eq(index).find('button').should('contain', 'view').click()
             cy.get('.blog')
               .eq(index)
